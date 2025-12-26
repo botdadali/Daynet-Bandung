@@ -1,184 +1,527 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Tools Daynet</title>
-  <meta name="description" content="Portal internal Daynet">
-  
-  <!-- PASTIKAN PATH BENAR untuk GitHub Pages -->
-  <link rel="stylesheet" href="styles.css">
-  
-  <!-- Tambahkan fallback CSS inline jika CSS gagal load -->
-  <style>
-    /* Emergency CSS jika styles.css gagal load */
-    body { 
-      font-family: 'Inter', Arial, sans-serif; 
-      background: #0a0a0a; 
-      color: white; 
-      margin: 0; 
-      padding: 20px; 
-    }
-    .tool-card { 
-      background: #1a1a1a; 
-      padding: 20px; 
-      border-radius: 10px; 
-      margin: 15px 0; 
-      border-left: 4px solid #c80000; 
-    }
-    .tool-btn { 
-      background: #c80000; 
-      color: white; 
-      border: none; 
-      padding: 10px 20px; 
-      border-radius: 5px; 
-      cursor: pointer; 
-    }
-  </style>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tools Daynet</title>
+    <style>
+        /* ===== RESET ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* ===== VARIABLES ===== */
+        :root {
+            --red: #c80000;
+            --red-light: #ff4444;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-text: #ffffff;
+            --dark-secondary: #9ca3af;
+            --light-bg: #ffffff;
+            --light-card: #f9fafb;
+            --light-text: #111827;
+            --light-secondary: #6b7280;
+            --border: rgba(255,255,255,0.1);
+        }
+        
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        /* ===== HEADER ===== */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        
+        .titles h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--red), var(--red-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .titles p {
+            color: var(--dark-secondary);
+            font-size: 1rem;
+        }
+        
+        /* ===== SEARCH ===== */
+        .search-wrapper {
+            margin-left: auto;
+            position: relative;
+            min-width: 300px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 14px 45px 14px 20px;
+            background: var(--dark-card);
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            color: var(--dark-text);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(200,0,0,0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+        }
+        
+        /* ===== FILTERS ===== */
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+        }
+        
+        .filter-pill {
+            padding: 12px 24px;
+            background: var(--dark-card);
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            color: var(--dark-text);
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .filter-pill:hover {
+            border-color: var(--red);
+            transform: translateY(-2px);
+        }
+        
+        .filter-pill.active {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+        
+        .filter-pill .count {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+        
+        /* ===== TOOL CARDS ===== */
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .tool-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 2px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--red);
+            box-shadow: 0 20px 40px rgba(200,0,0,0.15);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+        
+        .tool-card h2 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--dark-text);
+        }
+        
+        .tool-card p {
+            color: var(--dark-secondary);
+            line-height: 1.7;
+            flex-grow: 1;
+            margin: 0;
+        }
+        
+        /* ===== BUTTON ===== */
+        .tool-btn {
+            background: linear-gradient(135deg, var(--red), var(--red-light));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(200,0,0,0.3);
+        }
+        
+        .tool-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(200,0,0,0.4);
+        }
+        
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: var(--dark-card);
+            color: var(--dark-text);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--red);
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--dark-secondary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--red);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .search-wrapper {
+                width: 100%;
+                margin-left: 0;
+                min-width: auto;
+            }
+            
+            main {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .filter-container {
+                padding-bottom: 10px;
+            }
+            
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+        
+        /* ===== LIGHT MODE ===== */
+        body.light-mode {
+            background: var(--light-bg);
+            color: var(--light-text);
+            --border: rgba(0,0,0,0.1);
+        }
+        
+        body.light-mode .titles p {
+            color: var(--light-secondary);
+        }
+        
+        body.light-mode .search-input {
+            background: var(--light-card);
+            color: var(--light-text);
+        }
+        
+        body.light-mode .filter-pill {
+            background: var(--light-card);
+            color: var(--light-text);
+        }
+        
+        body.light-mode .tool-card {
+            background: var(--light-card);
+            color: var(--light-text);
+        }
+        
+        body.light-mode .tool-card h2 {
+            color: var(--light-text);
+        }
+        
+        body.light-mode .tool-card p {
+            color: var(--light-secondary);
+        }
+        
+        body.light-mode .theme-toggle {
+            background: var(--light-card);
+            color: var(--light-text);
+        }
+        
+        body.light-mode footer {
+            color: var(--light-secondary);
+        }
+    </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-spinner"></div>
-  </div>
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
 
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
+    <!-- HEADER -->
+    <header>
+        <div class="titles">
+            <h1>Tools Daynet</h1>
+            <p>Portal Internal — Akses Cepat ke Tools Konstruksi Daynet</p>
+        </div>
+        
+        <div class="search-wrapper">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search tools…" aria-label="Search tools">
+            <span class="search-icon">🔍</span>
+        </div>
+    </header>
 
-  <!-- Help Button -->
-  <button class="help-btn" onclick="toggleHelp()" aria-label="Keyboard shortcuts help">?</button>
-
-  <!-- Help Modal -->
-  <div class="help-modal" id="helpModal">
-    <div class="help-content">
-      <h3>⌨️ Keyboard Shortcuts</h3>
-      <div class="shortcuts-grid">
-        <div class="shortcut-item"><kbd>/</kbd><span>Focus search</span></div>
-        <div class="shortcut-item"><kbd>Esc</kbd><span>Clear search</span></div>
-        <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>K</kbd><span>Toggle theme</span></div>
-      </div>
-      <button class="close-help" onclick="toggleHelp()">Close</button>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <img src="assets/img/Daynet.png" alt="Daynet Logo">
-    <div class="titles">
-      <h1>Tools Daynet</h1>
-      <p>Portal Internal — Akses Cepat ke Tools Konstruksi Daynet</p>
-    </div>
-    <div class="search-wrapper">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search tools…" aria-label="Search tools">
-      <span class="search-icon">🔍</span>
-    </div>
-  </header>
-
-  <!-- Filters -->
-  <div class="filter-container">
-    <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">All Tools <span class="count">7</span></button>
-    <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">📄 Dokumensi <span class="count">2</span></button>
-    <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">🔄 Konversi <span class="count">3</span></button>
-    <button class="filter-pill" data-category="pdf" onclick="filterByCategory('pdf')">📑 PDF <span class="count">1</span></button>
-    <button class="filter-pill" data-category="kalkulator" onclick="filterByCategory('kalkulator')">🧮 Kalkulator <span class="count">1</span></button>
-  </div>
-
-  <!-- Main Content -->
-  <main id="main-content">
-    <!-- Tool 1 -->
-    <div class="tool-card" data-category="dokumensi" data-keywords="evident telkom dokumensi lapangan pdf">
-      <div class="tool-icon">📋</div>
-      <h2>Evident Pekerjaan Daynet</h2>
-      <p>Formulir dan generator PDF ringan untuk dokumentasi pekerjaan lapangan. Dirancang agar hasil export rapi, ringan, dan sesuai template Daynet.</p>
-      <button class="tool-btn" onclick="openTool('evident')">Open</button>
+    <!-- FILTERS -->
+    <div class="filter-container">
+        <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">All Tools <span class="count">7</span></button>
+        <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">📄 Dokumensi <span class="count">2</span></button>
+        <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">🔄 Konversi <span class="count">3</span></button>
+        <button class="filter-pill" data-category="pdf" onclick="filterByCategory('pdf')">📑 PDF <span class="count">1</span></button>
+        <button class="filter-pill" data-category="kalkulator" onclick="filterByCategory('kalkulator')">🧮 Kalkulator <span class="count">1</span></button>
     </div>
 
-    <!-- Tool 2 -->
-    <div class="tool-card" data-category="dokumensi" data-keywords="evident opm monitoring progress harian mingguan">
-      <div class="tool-icon">📊</div>
-      <h2>Evident OPM (Optical Power Meter)</h2>
-      <p>Generator Evident OPM untuk dokumentasi progres harian/mingguan proyek. Menggunakan template resmi Daynet dan format foto lapangan lengkap.</p>
-      <button class="tool-btn" onclick="openTool('opm')">Open</button>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+        <!-- TOOL 1 -->
+        <div class="tool-card" data-category="dokumensi" data-keywords="evident telkom dokumensi lapangan pdf">
+            <div class="tool-icon">📋</div>
+            <h2>Evident Pekerjaan Daynet</h2>
+            <p>Formulir dan generator PDF ringan untuk dokumentasi pekerjaan lapangan. Dirancang agar hasil export rapi, ringan, dan sesuai template Daynet.</p>
+            <button class="tool-btn" onclick="openTool('evident')">Open</button>
+        </div>
+        
+        <!-- TOOL 2 -->
+        <div class="tool-card" data-category="dokumensi" data-keywords="evident opm monitoring progress harian mingguan">
+            <div class="tool-icon">📊</div>
+            <h2>Evident OPM (Optical Power Meter)</h2>
+            <p>Generator Evident OPM untuk dokumentasi progres harian/mingguan proyek. Menggunakan template resmi Daynet dan format foto lapangan lengkap.</p>
+            <button class="tool-btn" onclick="openTool('opm')">Open</button>
+        </div>
+        
+        <!-- TOOL 3 -->
+        <div class="tool-card" data-category="konversi" data-keywords="kml dxf autocad converter survei tiang odp">
+            <div class="tool-icon">🗺️</div>
+            <h2>KML → AutoCAD Converter</h2>
+            <p>Konversi file KML hasil survei menjadi DXF AutoCAD lengkap dengan simbol standar (TE/TN/ODP) dan perhitungan matrix jarak antar tiang otomatis.</p>
+            <button class="tool-btn" onclick="openTool('kml2dxf')">Open</button>
+        </div>
+        
+        <!-- TOOL 4 -->
+        <div class="tool-card" data-category="konversi" data-keywords="kml csv extractor koordinat placemark point line polygon">
+            <div class="tool-icon">📍</div>
+            <h2>KML → CSV Extractor</h2>
+            <p>Ekstraksi koordinat dan data Placemark (Point/Line/Polygon) dari file KML menjadi CSV lengkap untuk perhitungan, listing ODP, dan dokumentasi FO.</p>
+            <button class="tool-btn" onclick="openTool('kml2csv')">Open</button>
+        </div>
+        
+        <!-- TOOL 5 -->
+        <div class="tool-card" data-category="konversi" data-keywords="csv kml converter plot maplibre plotting odp odc tiang">
+            <div class="tool-icon">🌐</div>
+            <h2>CSV → KML Converter</h2>
+            <p>Konversi CSV berisi Name, Latitude, Longitude, dan Deskripsi menjadi file KML lengkap dengan preview plot (MapLibre). Ideal untuk plotting titik ODP, ODC, Tiang, dan jalur FO.</p>
+            <button class="tool-btn" onclick="openTool('csv2kml')">Open</button>
+        </div>
+        
+        <!-- TOOL 6 -->
+        <div class="tool-card" data-category="pdf" data-keywords="pdf utility merge split compress jpg watermark protect unlock ocr">
+            <div class="tool-icon">📄</div>
+            <h2>PDF Utility (Client-Side)</h2>
+            <p>Koleksi lengkap tools PDF offline: merge, split, compress, JPG↔PDF, watermark, protect/unlock, dan OCR. Semua berjalan di browser tanpa upload ke server.</p>
+            <button class="tool-btn" onclick="openTool('pdf')">Open</button>
+        </div>
+        
+        <!-- TOOL 7 -->
+        <div class="tool-card" data-category="kalkulator" data-keywords="link budget calculator optik redaman jarak">
+            <div class="tool-icon">📶</div>
+            <h2>Link Budget Kalkulator</h2>
+            <p>Kalkulator untuk menghitung Link Budget optik (Redaman Total) dan estimasi jarak jangkauan.</p>
+            <button class="tool-btn" onclick="openTool('linkbudget')">Open</button>
+        </div>
+    </main>
 
-    <!-- Tool 3 -->
-    <div class="tool-card" data-category="konversi" data-keywords="kml dxf autocad converter survei tiang odp">
-      <div class="tool-icon">🗺️</div>
-      <h2>KML → AutoCAD Converter</h2>
-      <p>Konversi file KML hasil survei menjadi DXF AutoCAD lengkap dengan simbol standar (TE/TN/ODP) dan perhitungan matrix jarak antar tiang otomatis.</p>
-      <button class="tool-btn" onclick="openTool('kml2dxf')">Open</button>
-    </div>
+    <!-- FOOTER -->
+    <footer>
+        © 2025 PT Daynet. Semua hak dilindungi.<br>
+        <small>Hosted on <a href="https://github.com/dodadali/Daynet-Bandung" target="_blank">GitHub Pages</a></small>
+    </footer>
 
-    <!-- Tool 4 -->
-    <div class="tool-card" data-category="konversi" data-keywords="kml csv extractor koordinat placemark point line polygon">
-      <div class="tool-icon">📍</div>
-      <h2>KML → CSV Extractor</h2>
-      <p>Ekstraksi koordinat dan data Placemark (Point/Line/Polygon) dari file KML menjadi CSV lengkap untuk perhitungan, listing ODP, dan dokumentasi FO.</p>
-      <button class="tool-btn" onclick="openTool('kml2csv')">Open</button>
-    </div>
-
-    <!-- Tool 5 -->
-    <div class="tool-card" data-category="konversi" data-keywords="csv kml converter plot maplibre plotting odp odc tiang">
-      <div class="tool-icon">🌐</div>
-      <h2>CSV → KML Converter</h2>
-      <p>Konversi CSV berisi Name, Latitude, Longitude, dan Deskripsi menjadi file KML lengkap dengan preview plot (MapLibre). Ideal untuk plotting titik ODP, ODC, Tiang, dan jalur FO.</p>
-      <button class="tool-btn" onclick="openTool('csv2kml')">Open</button>
-    </div>
-
-    <!-- Tool 6 -->
-    <div class="tool-card" data-category="pdf" data-keywords="pdf utility merge split compress jpg watermark protect unlock ocr">
-      <div class="tool-icon">📄</div>
-      <h2>PDF Utility (Client-Side)</h2>
-      <p>Koleksi lengkap tools PDF offline: merge, split, compress, JPG↔PDF, watermark, protect/unlock, dan OCR. Semua berjalan di browser tanpa upload ke server.</p>
-      <button class="tool-btn" onclick="openTool('pdf')">Open</button>
-    </div>
-
-    <!-- Tool 7 -->
-    <div class="tool-card" data-category="kalkulator" data-keywords="link budget calculator optik redaman jarak">
-      <div class="tool-icon">📶</div>
-      <h2>Link Budget Kalkulator</h2>
-      <p>Kalkulator untuk menghitung Link Budget optik (Redaman Total) dan estimasi jarak jangkauan.</p>
-      <button class="tool-btn" onclick="openTool('linkbudget')">Open</button>
-    </div>
-  </main>
-
-  <!-- Empty State -->
-  <div class="empty-state" id="emptyState" style="display: none;">
-    <div class="empty-icon">🔍</div>
-    <h3>No tools found</h3>
-    <p>Try adjusting your search or filter to find what you're looking for.</p>
-    <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
-  </div>
-
-  <!-- Back to Top -->
-  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</button>
-
-  <!-- Footer -->
-  <footer>
-    © 2025 PT Daynet. Semua hak dilindungi.<br>
-    <small>Hosted on <a href="https://github.com/dodadali/Daynet-Bandung" target="_blank">GitHub Pages</a></small>
-  </footer>
-
-  <script src="app.js"></script>
-  <script>
-    // Simple tool opener for demo
-    function openTool(toolName) {
-      const tools = {
-        evident: 'Evident Pekerjaan Daynet',
-        opm: 'Evident OPM',
-        kml2dxf: 'KML to DXF Converter',
-        kml2csv: 'KML to CSV Extractor',
-        csv2kml: 'CSV to KML Converter',
-        pdf: 'PDF Utility',
-        linkbudget: 'Link Budget Calculator'
-      };
-      alert(`🚧 ${tools[toolName]}\n\nTool dalam pengembangan. Akan segera hadir!`);
-    }
-  </script>
+    <!-- INLINE JAVASCRIPT -->
+    <script>
+        // Daynet Tools - Complete JavaScript
+        let activeCategory = 'all';
+        
+        // 1. THEME TOGGLE
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.querySelector('.theme-toggle');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                toggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                toggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // 2. LOAD SAVED THEME
+        function loadTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('.theme-toggle').textContent = '🌙';
+            }
+        }
+        
+        // 3. FILTER BY CATEGORY
+        function filterByCategory(category) {
+            activeCategory = category;
+            const cards = document.querySelectorAll('.tool-card');
+            const pills = document.querySelectorAll('.filter-pill');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Update active pill
+            pills.forEach(pill => {
+                if (pill.dataset.category === category) {
+                    pill.classList.add('active');
+                } else {
+                    pill.classList.remove('active');
+                }
+            });
+            
+            // Filter cards
+            cards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const cardText = card.textContent.toLowerCase();
+                const keywords = card.dataset.keywords || '';
+                
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesSearch = searchTerm === '' || 
+                                     cardText.includes(searchTerm) || 
+                                     keywords.includes(searchTerm);
+                
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // 4. SEARCH FUNCTIONALITY
+        function initSearch() {
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function() {
+                filterByCategory(activeCategory);
+            });
+            
+            // Focus search with '/' key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+                
+                // Ctrl+K for theme toggle
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+            });
+        }
+        
+        // 5. OPEN TOOL FUNCTION
+        function openTool(toolName) {
+            const toolNames = {
+                'evident': 'Evident Pekerjaan Daynet',
+                'opm': 'Evident OPM',
+                'kml2dxf': 'KML to DXF Converter',
+                'kml2csv': 'KML to CSV Extractor',
+                'csv2kml': 'CSV to KML Converter',
+                'pdf': 'PDF Utility',
+                'linkbudget': 'Link Budget Calculator'
+            };
+            
+            alert(`🚧 ${toolNames[toolName] || 'Tool'}\n\nTool dalam pengembangan. Akan segera hadir!`);
+        }
+        
+        // 6. INITIALIZE EVERYTHING
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Daynet Tools initialized');
+            
+            // Load saved theme
+            loadTheme();
+            
+            // Initialize search
+            initSearch();
+            
+            // Set initial filter
+            filterByCategory('all');
+        });
+    </script>
 </body>
 </html>
