@@ -7,15 +7,35 @@
   <meta name="description" content="Portal internal Daynet - Akses cepat ke tools konstruksi">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/img/favicon.png">
 </head>
 
 <body>
+  <!-- Loading Overlay -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
   </div>
-  
+
+  <!-- Theme Toggle -->
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
 
+  <!-- Help Button -->
+  <button class="help-btn" onclick="toggleHelp()" aria-label="Keyboard shortcuts help">?</button>
+
+  <!-- Help Modal -->
+  <div class="help-modal" id="helpModal">
+    <div class="help-content">
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><kbd>/</kbd><span>Focus search</span></div>
+        <div class="shortcut-item"><kbd>Esc</kbd><span>Clear search</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>K</kbd><span>Toggle theme</span></div>
+      </div>
+      <button class="close-help" onclick="toggleHelp()">Close</button>
+    </div>
+  </div>
+
+  <!-- Header -->
   <header>
     <img src="assets/img/Daynet.png" alt="Daynet Logo">
     <div class="titles">
@@ -23,45 +43,111 @@
       <p>Portal Internal — Akses Cepat ke Tools Konstruksi Daynet</p>
     </div>
     <div class="search-wrapper">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search tools…">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search tools…" aria-label="Search tools">
       <span class="search-icon">🔍</span>
     </div>
   </header>
 
+  <!-- Filters -->
   <div class="filter-container">
-    <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">All Tools</button>
-    <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">📄 Dokumensi</button>
-    <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">🔄 Konversi</button>
+    <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">All Tools <span class="count">7</span></button>
+    <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">📄 Dokumensi <span class="count">2</span></button>
+    <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">🔄 Konversi <span class="count">3</span></button>
+    <button class="filter-pill" data-category="pdf" onclick="filterByCategory('pdf')">📑 PDF <span class="count">1</span></button>
+    <button class="filter-pill" data-category="kalkulator" onclick="filterByCategory('kalkulator')">🧮 Kalkulator <span class="count">1</span></button>
   </div>
 
+  <!-- Main Content -->
   <main id="main-content">
-    <div class="tool-card" data-category="dokumensi">
+    <!-- Tool 1 -->
+    <div class="tool-card" data-category="dokumensi" data-keywords="evident telkom dokumensi lapangan pdf">
       <div class="tool-icon">📋</div>
       <h2>Evident Pekerjaan Daynet</h2>
-      <p>Formulir dan generator PDF untuk dokumentasi pekerjaan lapangan.</p>
-      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+      <p>Formulir dan generator PDF ringan untuk dokumentasi pekerjaan lapangan. Dirancang agar hasil export rapi, ringan, dan sesuai template Daynet.</p>
+      <button class="tool-btn" onclick="openTool('evident')">Open</button>
     </div>
-    
-    <div class="tool-card" data-category="dokumensi">
+
+    <!-- Tool 2 -->
+    <div class="tool-card" data-category="dokumensi" data-keywords="evident opm monitoring progress harian mingguan">
       <div class="tool-icon">📊</div>
-      <h2>Evident OPM</h2>
-      <p>Generator Evident OPM untuk progres harian/mingguan proyek.</p>
-      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+      <h2>Evident OPM (Optical Power Meter)</h2>
+      <p>Generator Evident OPM untuk dokumentasi progres harian/mingguan proyek. Menggunakan template resmi Daynet dan format foto lapangan lengkap.</p>
+      <button class="tool-btn" onclick="openTool('opm')">Open</button>
     </div>
-    
-    <div class="tool-card" data-category="konversi">
+
+    <!-- Tool 3 -->
+    <div class="tool-card" data-category="konversi" data-keywords="kml dxf autocad converter survei tiang odp">
       <div class="tool-icon">🗺️</div>
       <h2>KML → AutoCAD Converter</h2>
-      <p>Konversi file KML menjadi DXF AutoCAD lengkap.</p>
-      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+      <p>Konversi file KML hasil survei menjadi DXF AutoCAD lengkap dengan simbol standar (TE/TN/ODP) dan perhitungan matrix jarak antar tiang otomatis.</p>
+      <button class="tool-btn" onclick="openTool('kml2dxf')">Open</button>
+    </div>
+
+    <!-- Tool 4 -->
+    <div class="tool-card" data-category="konversi" data-keywords="kml csv extractor koordinat placemark point line polygon">
+      <div class="tool-icon">📍</div>
+      <h2>KML → CSV Extractor</h2>
+      <p>Ekstraksi koordinat dan data Placemark (Point/Line/Polygon) dari file KML menjadi CSV lengkap untuk perhitungan, listing ODP, dan dokumentasi FO.</p>
+      <button class="tool-btn" onclick="openTool('kml2csv')">Open</button>
+    </div>
+
+    <!-- Tool 5 -->
+    <div class="tool-card" data-category="konversi" data-keywords="csv kml converter plot maplibre plotting odp odc tiang">
+      <div class="tool-icon">🌐</div>
+      <h2>CSV → KML Converter</h2>
+      <p>Konversi CSV berisi Name, Latitude, Longitude, dan Deskripsi menjadi file KML lengkap dengan preview plot (MapLibre). Ideal untuk plotting titik ODP, ODC, Tiang, dan jalur FO.</p>
+      <button class="tool-btn" onclick="openTool('csv2kml')">Open</button>
+    </div>
+
+    <!-- Tool 6 -->
+    <div class="tool-card" data-category="pdf" data-keywords="pdf utility merge split compress jpg watermark protect unlock ocr">
+      <div class="tool-icon">📄</div>
+      <h2>PDF Utility (Client-Side)</h2>
+      <p>Koleksi lengkap tools PDF offline: merge, split, compress, JPG↔PDF, watermark, protect/unlock, dan OCR. Semua berjalan di browser tanpa upload ke server.</p>
+      <button class="tool-btn" onclick="openTool('pdf')">Open</button>
+    </div>
+
+    <!-- Tool 7 -->
+    <div class="tool-card" data-category="kalkulator" data-keywords="link budget calculator optik redaman jarak">
+      <div class="tool-icon">📶</div>
+      <h2>Link Budget Kalkulator</h2>
+      <p>Kalkulator untuk menghitung Link Budget optik (Redaman Total) dan estimasi jarak jangkauan.</p>
+      <button class="tool-btn" onclick="openTool('linkbudget')">Open</button>
     </div>
   </main>
 
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState" style="display: none;">
+    <div class="empty-icon">🔍</div>
+    <h3>No tools found</h3>
+    <p>Try adjusting your search or filter to find what you're looking for.</p>
+    <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</button>
+
+  <!-- Footer -->
   <footer>
-    © 2025 PT Daynet<br>
-    <small>Hosted on GitHub Pages</small>
+    © 2025 PT Daynet. Semua hak dilindungi.<br>
+    <small>Hosted on <a href="https://github.com/dodadali/Daynet-Bandung" target="_blank">GitHub Pages</a></small>
   </footer>
-  
+
   <script src="app.js"></script>
+  <script>
+    // Simple tool opener for demo
+    function openTool(toolName) {
+      const tools = {
+        evident: 'Evident Pekerjaan Daynet',
+        opm: 'Evident OPM',
+        kml2dxf: 'KML to DXF Converter',
+        kml2csv: 'KML to CSV Extractor',
+        csv2kml: 'CSV to KML Converter',
+        pdf: 'PDF Utility',
+        linkbudget: 'Link Budget Calculator'
+      };
+      alert(`🚧 ${tools[toolName]}\n\nTool dalam pengembangan. Akan segera hadir!`);
+    }
+  </script>
 </body>
 </html>
