@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tools Daynet</title>
+  <meta name="description" content="Portal internal Daynet - Akses cepat ke tools konstruksi">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+  
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
+
+  <header>
+    <img src="assets/img/Daynet.png" alt="Daynet Logo">
+    <div class="titles">
+      <h1>Tools Daynet</h1>
+      <p>Portal Internal — Akses Cepat ke Tools Konstruksi Daynet</p>
+    </div>
+    <div class="search-wrapper">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search tools…">
+      <span class="search-icon">🔍</span>
+    </div>
+  </header>
+
+  <div class="filter-container">
+    <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">All Tools</button>
+    <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">📄 Dokumensi</button>
+    <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">🔄 Konversi</button>
+  </div>
+
+  <main id="main-content">
+    <div class="tool-card" data-category="dokumensi">
+      <div class="tool-icon">📋</div>
+      <h2>Evident Pekerjaan Daynet</h2>
+      <p>Formulir dan generator PDF untuk dokumentasi pekerjaan lapangan.</p>
+      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="dokumensi">
+      <div class="tool-icon">📊</div>
+      <h2>Evident OPM</h2>
+      <p>Generator Evident OPM untuk progres harian/mingguan proyek.</p>
+      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="konversi">
+      <div class="tool-icon">🗺️</div>
+      <h2>KML → AutoCAD Converter</h2>
+      <p>Konversi file KML menjadi DXF AutoCAD lengkap.</p>
+      <button class="tool-btn" onclick="alert('Coming Soon!')">Open</button>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 PT Daynet<br>
+    <small>Hosted on GitHub Pages</small>
+  </footer>
+  
+  <script src="app.js"></script>
+</body>
+</html>
