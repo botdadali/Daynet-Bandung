@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Perbaikan meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Primary Meta Tags -->
+  <title>Tools Daynet</title>
+  <meta name="title" content="Tools Daynet — Daynet">
+  <meta name="description" content="Portal internal Daynet - Akses cepat ke tools konstruksi: Evident OPM, KML to DXF/CSV, PDF Utility, dan lebih banyak lagi.">
+  <meta name="keywords" content="Daynet, tools konstruksi, evident opm, kml converter, pdf utility">
+  <meta name="author" content="PT Daynet">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://Daynet-Bandung.com/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://Daynet-Bandung.com/">
+  <meta property="og:title" content="Tools Daynet — Daynet">
+  <meta property="og:description" content="Portal Internal — Akses Cepat ke Tools Konstruksi Daynet">
+  <meta property="og:image" content="assets/img/og-landing.png">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://Daynet-Bandung.com/">
+  <meta name="twitter:title" content="Tools Daynet — Daynet">
+  <meta name="twitter:description" content="Portal Internal — Akses Cepat ke Tools Konstruksi">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.png">
+  
+  <!-- Performance & PWA -->
+  <meta name="theme-color" content="#c80000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+  
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" aria-pressed="false">☀️</button>
+
+  <!-- Keyboard Shortcuts Help Button -->
+  <button class="help-btn" onclick="toggleHelp()" aria-label="Keyboard shortcuts help">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+  </button>
+
+  <!-- Help Modal -->
+  <div class="help-modal" id="helpModal">
+    <div class="help-content">
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item">
+          <kbd>1</kbd><kbd>-</kbd><kbd>6</kbd>
+          <span>Open tool 1-6</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>/</kbd>
+          <span>Focus search</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Esc</kbd>
+          <span>Clear search</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Ctrl</kbd><kbd>K</kbd>
+          <span>Toggle theme</span>
+        </div>
+      </div>
+      <button class="close-help" onclick="toggleHelp()">Close</button>
+    </div>
+  </div>
+
+  <header>
+    <img src="assets/img/Daynet.png" alt="Daynet Logo" loading="lazy">
+    <div class="titles">
+      <h1>Tools Daynet</h1>
+      <p>Portal Internal — Akses Cepat ke Tools Konstruksi Daynet</p>
+    </div>
+    <div class="search-wrapper">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search tools…" aria-label="Search tools" />
+      <span class="search-icon">🔍</span>
+    </div>
+  </header>
+
+  <!-- Category Filters -->
+  <div class="filter-container">
+    <button class="filter-pill active" data-category="all" onclick="filterByCategory('all')">
+      All Tools <span class="count">7</span>
+    </button>
+    <button class="filter-pill" data-category="dokumensi" onclick="filterByCategory('dokumensi')">
+      📄 Dokumensi <span class="count">2</span>
+    </button>
+    <button class="filter-pill" data-category="konversi" onclick="filterByCategory('konversi')">
+      🔄 Konversi <span class="count">3</span>
+    </button>
+    <button class="filter-pill" data-category="pdf" onclick="filterByCategory('pdf')">
+      📑 PDF <span class="count">1</span>
+    </button>
+    <button class="filter-pill" data-category="kalkulator" onclick="filterByCategory('kalkulator')">
+      🧮 Kalkulator <span class="count">1</span>
+    </button>
+  </div>
+
+  <main id="main-content">
+    <div class="tool-card" data-category="dokumensi" data-keywords="evident telkom dokumensi lapangan pdf">
+      <div class="tool-icon">📋</div>
+      <h2>Evident Pekerjaan Daynet</h2>
+      <p>Formulir dan generator PDF ringan untuk dokumentasi pekerjaan lapangan. Dirancang agar hasil export rapi, ringan, dan sesuai template Daynet.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/evident.telkom/" aria-label="Buka Evident Tool di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="dokumensi" data-keywords="evident opm monitoring progress harian mingguan">
+      <div class="tool-icon">📊</div>
+      <h2>Evident OPM (Optical Power Meter)</h2>
+      <p>Generator Evident OPM untuk dokumentasi progres harian/mingguan proyek. Menggunakan template resmi Daynet dan format foto lapangan lengkap.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/evidentopm/" aria-label="Buka Evident OPM di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="konversi" data-keywords="kml dxf autocad converter survei tiang odp">
+      <div class="tool-icon">🗺️</div>
+      <h2>KML → AutoCAD Converter</h2>
+      <p>Konversi file KML hasil survei menjadi DXF AutoCAD lengkap dengan simbol standar (TE/TN/ODP) dan perhitungan matrix jarak antar tiang otomatis.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/kml2dxf/" aria-label="Buka KML to DXF Tool di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="konversi" data-keywords="kml csv extractor koordinat placemark point line polygon">
+      <div class="tool-icon">📍</div>
+      <h2>KML → CSV Extractor</h2>
+      <p>Ekstraksi koordinat dan data Placemark (Point/Line/Polygon) dari file KML menjadi CSV lengkap untuk perhitungan, listing ODP, dan dokumentasi FO.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/kmltocsv/" aria-label="Buka KML to CSV Tool di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="konversi" data-keywords="csv kml converter plot maplibre plotting odp odc tiang">
+      <div class="tool-icon">🌐</div>
+      <h2>CSV → KML Converter</h2>
+      <p>Konversi CSV berisi Name, Latitude, Longitude, dan Deskripsi menjadi file KML lengkap dengan preview plot (MapLibre). Ideal untuk plotting titik ODP, ODC, Tiang, dan jalur FO.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/csv2kml/" aria-label="Buka CSV to KML Tool di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="pdf" data-keywords="pdf utility merge split compress jpg watermark protect unlock ocr">
+      <div class="tool-icon">📄</div>
+      <h2>PDF Utility (Client-Side)</h2>
+      <p>Koleksi lengkap tools PDF offline: merge, split, compress, JPG↔PDF, watermark, protect/unlock, dan OCR. Semua berjalan di browser tanpa upload ke server.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/pdfutility" aria-label="Buka PDF Utility di tab baru">Open</button>
+    </div>
+    
+    <div class="tool-card" data-category="kalkulator" data-keywords="link budget calculator optik redaman jarak">
+      <div class="tool-icon">📶</div>
+      <h2>Link Budget Kalkulator</h2>
+      <p>Kalkulator untuk menghitung Link Budget optik (Redaman Total) dan estimasi jarak jangkauan.</p>
+      <button class="tool-btn" data-url="https://Daynet-Bandung.com/linkbudget" aria-label="Buka Link Budget Kalkulator di tab baru">Open</button>
+    </div>
+  </main>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState" style="display: none;">
+    <div class="empty-icon">🔍</div>
+    <h3>No tools found</h3>
+    <p>Try adjusting your search or filter to find what you're looking for.</p>
+    <button class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</button>
+  
+  <footer>
+    <footer>
+  © 2025 PT Daynet. Semua hak dilindungi.<br>
+  Website: <a href="https://USERNAME.github.io/daynet-tools/" target="_blank">Daynet Tools</a> | 
+  GitHub: <a href="https://github.com/USERNAME/daynet-tools" target="_blank">Source Code</a>
+</footer>
+  </footer>
+  
+  <script src="app.js"></script>
+</body>
+</html>
